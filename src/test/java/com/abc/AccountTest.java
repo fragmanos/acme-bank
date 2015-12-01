@@ -1,10 +1,9 @@
 package com.abc;
 
-import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import static junit.framework.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 /**
  * @author fragkakise on 01/12/2015.
