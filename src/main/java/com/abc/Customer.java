@@ -50,16 +50,16 @@ public class Customer {
         for(Transaction transaction : account.transactions) {
             accountStatement
               .append("  ").append(getTransactionType(transaction))
-              .append(" ").append(getTransactionAmountFormattedToDollars(transaction.amount))
+              .append(" ").append(getTransactionAmountFormattedToDollars(transaction.getAmount()))
               .append("\n");
-            total += transaction.amount;
+            total += transaction.getAmount();
         }
         accountStatement.append("Total ").append(getTransactionAmountFormattedToDollars(total));
         return String.valueOf(accountStatement);
     }
 
     private String getTransactionType(Transaction transaction) {
-        return transaction.amount < 0 ? "withdrawal" : "deposit";
+        return transaction.getAmount() < 0 ? "withdrawal" : "deposit";
     }
 
     private String getTransactionAmountFormattedToDollars(double amount){

@@ -69,7 +69,7 @@ public void withdraw(double amount) {
     public double sumTransactions() {
         double amount = 0.0;
         for (Transaction transaction: transactions)
-            amount += transaction.amount;
+            amount += transaction.getAmount();
         return amount;
     }
 
