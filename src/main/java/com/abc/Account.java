@@ -3,6 +3,8 @@ package com.abc;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.abc.AccountType.*;
+
 public class Account {
 
     private AccountType accountType;
