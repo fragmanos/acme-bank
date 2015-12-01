@@ -14,33 +14,25 @@ public class Bank {
         customers.add(customer);
     }
 
-    public String customerSummary() {
-        String summary = "Customer Summary";
-        for (Customer c : customers)
-            summary += "\n - " + c.getCustomerName() + " (" + format(c.getNumberOfAccounts(), "account") + ")";
-        return summary;
+    public String getCustomerSummary() {
+        StringBuilder summary = new StringBuilder("Customer Summary");
+        for (Customer customer : customers)
+            summary.append("\n - ")
+              .append(customer.getCustomerName()).append(" (")
+              .append(getPluralFormat(customer.getNumberOfAccounts(), "account")).append(")");
+        return String.valueOf(summary);
     }
 
-    //Make sure correct plural of word is created based on the number passed in:
-    //If number passed in is 1 just return the word otherwise add an 's' at the end
-    private String format(int number, String word) {
+    //  Make sure correct plural of word is created based on the number passed in:
+    //  If number passed in is 1 just return the word otherwise add an 's' at the end
+    private String getPluralFormat(int number, String word) {
         return number + " " + (number == 1 ? word : word + "s");
     }
 
-    public double totalInterestPaid() {
-        double total = 0;
-        for(Customer c: customers)
-            total += c.getTotalInterestEarnedForAllAccounts();
-        return total;
-    }
-
-    public String getFirstCustomer() {
-        try {
-            customers = null;
-            return customers.get(0).getCustomerName();
-        } catch (Exception e){
-            e.printStackTrace();
-            return "Error";
-        }
+    public double totalInterestPaidForAllCustomers() {
+        double totalInterestPaid = 0;
+        for(Customer customer: customers)
+            totalInterestPaid += customer.getTotalInterestEarnedForAllAccounts();
+        return totalInterestPaid;
     }
 }
