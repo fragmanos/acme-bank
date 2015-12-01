@@ -5,6 +5,7 @@ import java.util.List;
 
 public class Bank {
     private List<Customer> customers;
+    private String customerSummary;
 
     public Bank() {
         customers = new ArrayList<Customer>();
@@ -14,9 +15,8 @@ public class Bank {
         customers.add(customer);
     }
 
-    public String getCustomerSummary() {
+    public String getCustomerSummary(Customer customer) {
         StringBuilder summary = new StringBuilder("Customer Summary");
-        for (Customer customer : customers)
             summary.append("\n - ")
               .append(customer.getCustomerName()).append(" (")
               .append(getPluralFormat(customer.getNumberOfAccounts(), "account")).append(")");

@@ -28,28 +28,28 @@ public class BankTest {
     @Test
     public void testCustomerSummaryMatchesExpected() {
         customer.openAccount(checkingAccount);
-        assertEquals("Customer Summary\n - Manos (1 account)", bank.getCustomerSummary());
+        assertEquals("Customer Summary\n - Manos (1 account)", bank.getCustomerSummary(customer));
     }
 
     @Test
     public void testTotalInterestPaidForCheckingAccountMatchesExpected() {
         customer.openAccount(checkingAccount);
         checkingAccount.deposit(100.0);
-        assertEquals(0.1, bank.totalInterestPaidForAllCustomers(), DOUBLE_DELTA);
+        assertEquals(0.1, customer.getTotalInterestEarnedForAccount(checkingAccount), DOUBLE_DELTA);
     }
 
     @Test
     public void testTotalInterestPaidForSavingsAccountMatchesExpected() {
         customer.openAccount(savingsAccount);
         savingsAccount.deposit(1500.0);
-        assertEquals(2.0, bank.totalInterestPaidForAllCustomers(), DOUBLE_DELTA);
+        assertEquals(2.0, customer.getTotalInterestEarnedForAccount(savingsAccount), DOUBLE_DELTA);
     }
 
     @Test
     public void testTotalInterestPaidForMaxiSavingsAccountMatchesExpected() {
         customer.openAccount(maxiSavingsAccount);
         maxiSavingsAccount.deposit(3000.0);
-        assertEquals(170.0, bank.totalInterestPaidForAllCustomers(), DOUBLE_DELTA);
+        assertEquals(170.0, customer.getTotalInterestEarnedForAccount(maxiSavingsAccount), DOUBLE_DELTA);
     }
 
 }

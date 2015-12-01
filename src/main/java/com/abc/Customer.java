@@ -72,4 +72,8 @@ public class Customer {
     private String getTransactionAmountFormattedToDollars(double amount){
         return String.format("$%,.2f", abs(amount));
     }
+
+    public double getTotalInterestEarnedForAccount(Account account) {
+        return account.interestEarned();
+    }
 }
