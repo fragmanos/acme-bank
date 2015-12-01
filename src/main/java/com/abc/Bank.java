@@ -17,7 +17,7 @@ public class Bank {
     public String customerSummary() {
         String summary = "Customer Summary";
         for (Customer c : customers)
-            summary += "\n - " + c.getName() + " (" + format(c.getNumberOfAccounts(), "account") + ")";
+            summary += "\n - " + c.getCustomerName() + " (" + format(c.getNumberOfAccounts(), "account") + ")";
         return summary;
     }
 
@@ -30,14 +30,14 @@ public class Bank {
     public double totalInterestPaid() {
         double total = 0;
         for(Customer c: customers)
-            total += c.totalInterestEarned();
+            total += c.getTotalInterestEarnedForAllAccounts();
         return total;
     }
 
     public String getFirstCustomer() {
         try {
             customers = null;
-            return customers.get(0).getName();
+            return customers.get(0).getCustomerName();
         } catch (Exception e){
             e.printStackTrace();
             return "Error";

@@ -6,73 +6,70 @@ import java.util.List;
 import static java.lang.Math.abs;
 
 public class Customer {
-    private String name;
+    private String customerName;
     private List<Account> accounts;
 
-    public Customer(String name) {
-        this.name = name;
+    public Customer(String customerName) {
+        this.customerName = customerName;
         this.accounts = new ArrayList<Account>();
     }
 
-    public String getName() {
-        return name;
+    public String getCustomerName() {
+        return customerName;
     }
 
-    public Customer openAccount(Account account) {
+    public void openAccount(Account account) {
         accounts.add(account);
-        return this;
     }
 
     public int getNumberOfAccounts() {
         return accounts.size();
     }
 
-    public double totalInterestEarned() {
-        double total = 0;
-        for (Account a : accounts)
-            total += a.interestEarned();
-        return total;
+    public double getTotalInterestEarnedForAllAccounts() {
+        double interestEarned = 0;
+        for (Account account : accounts)
+            interestEarned += account.interestEarned();
+        return interestEarned;
     }
 
-    public String getStatement() {
-        String statement = null;
-        statement = "Statement for " + name + "\n";
+    public String getStatementForAllAccounts() {
+        double transactionAmount = 0;
+        StringBuilder statement = new StringBuilder("");
+        statement.append("Statement for ")
+          .append(customerName)
+          .append("\n");
+        for (Account account : accounts) {
+            statement.append("\n").append(getStatementForAccount(account)).append("\n");
+            transactionAmount += account.sumTransactions();
+        }
+        statement.append("\nTotal In All Accounts ")
+          .append(getTransactionAmountFormattedToDollars(transactionAmount));
+        return String.valueOf(statement);
+    }
+
+    private String getStatementForAccount(Account account) {
+        StringBuilder accountStatement = new StringBuilder("");
         double total = 0.0;
-        for (Account a : accounts) {
-            statement += "\n" + statementForAccount(a) + "\n";
-            total += a.sumTransactions();
+
+        accountStatement.append(account.getAccountType().getDescription()).append("\n");
+
+        for(Transaction transaction : account.transactions) {
+            accountStatement
+              .append("  ").append(getTransactionType(transaction))
+              .append(" ").append(getTransactionAmountFormattedToDollars(transaction.amount))
+              .append("\n");
+            total += transaction.amount;
         }
-        statement += "\nTotal In All Accounts " + toDollars(total);
-        return statement;
+        accountStatement.append("Total ").append(getTransactionAmountFormattedToDollars(total));
+        return String.valueOf(accountStatement);
     }
 
-    private String statementForAccount(Account account) {
-        String summary = "";
-
-       //Translate to pretty account type
-        switch(account.getAccountType()){
-            case CHECKING:
-                summary += "Checking Account\n";
-                break;
-            case SAVINGS:
-                summary += "Savings Account\n";
-                break;
-            case MAXI_SAVINGS:
-                summary += "Maxi Savings Account\n";
-                break;
-        }
-
-        //Now total up all the transactions
-        double total = 0.0;
-        for (Transaction t : account.transactions) {
-            summary += "  " + (t.amount < 0 ? "withdrawal" : "deposit") + " " + toDollars(t.amount) + "\n";
-            total += t.amount;
-        }
-        summary += "Total " + toDollars(total);
-        return summary;
+    private String getTransactionType(Transaction transaction) {
+        return transaction.amount < 0 ? "withdrawal" : "deposit";
     }
 
-    private String toDollars(double d){
-        return String.format("$%,.2f", abs(d));
+    private String getTransactionAmountFormattedToDollars(double amount){
+        return String.format("$%,.2f", abs(amount));
     }
 }
