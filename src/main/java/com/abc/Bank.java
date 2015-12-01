@@ -5,7 +5,6 @@ import java.util.List;
 
 public class Bank {
     private List<Customer> customers;
-    private String customerSummary;
 
     public Bank() {
         customers = new ArrayList<Customer>();
@@ -29,10 +28,4 @@ public class Bank {
         return number + " " + (number == 1 ? word : word + "s");
     }
 
-    public double totalInterestPaidForAllCustomers() {
-        double totalInterestPaid = 0;
-        for(Customer customer: customers)
-            totalInterestPaid += customer.getTotalInterestEarnedForAllAccounts();
-        return totalInterestPaid;
-    }
 }

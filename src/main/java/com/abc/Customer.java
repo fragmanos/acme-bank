@@ -26,13 +26,6 @@ public class Customer {
         return accounts.size();
     }
 
-    public double getTotalInterestEarnedForAllAccounts() {
-        double interestEarned = 0;
-        for (Account account : accounts)
-            interestEarned += account.interestEarned();
-        return interestEarned;
-    }
-
     public String getStatementForAllAccounts() {
         double transactionAmount = 0;
         StringBuilder statement = new StringBuilder("");
