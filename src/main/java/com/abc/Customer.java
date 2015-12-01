@@ -67,6 +67,6 @@ public class Customer {
     }
 
     public double getTotalInterestEarnedForAccount(Account account) {
-        return account.interestEarned();
+        return account.getInterestEarned();
     }
 }
