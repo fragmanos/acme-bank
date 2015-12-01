@@ -31,6 +31,19 @@ public void withdraw(double amount) {
     }
 }
 
+    public void transfer(int amount, Account targetAccount) {
+        if (amount > 0) {
+            if(amount <= this.sumTransactions()) {
+                targetAccount.deposit(amount);
+                this.withdraw(amount);
+            } else {
+                throw new IllegalArgumentException("transferred amount must be less or equal than balance");
+            }
+        } else {
+            throw new IllegalArgumentException("attempt to transfer negative amount of money");
+        }
+    }
+
     public double getInterestEarned() {
         double amount = sumTransactions();
         switch(accountType){

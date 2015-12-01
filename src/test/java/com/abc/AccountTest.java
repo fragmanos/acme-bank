@@ -56,4 +56,26 @@ public class AccountTest {
     assertEquals(1, savingsAccount.getInterestEarned(), DOUBLE_DELTA);
   }
 
+  @Test
+  public void testTransferBetweenAccountsMatchesExpected(){
+    checkingAccount.deposit(1000);
+    savingsAccount.deposit(1000);
+    checkingAccount.transfer(200, savingsAccount);
+    assertEquals(800, checkingAccount.sumTransactions(), DOUBLE_DELTA);
+    assertEquals(1200, savingsAccount.sumTransactions(), DOUBLE_DELTA);
+  }
+
+  @Test(expected=IllegalArgumentException.class)
+  public void testTransferWithoutSufficientMoneyOnTheSourceAccount(){
+    checkingAccount.deposit(1000);
+    savingsAccount.deposit(1000);
+    checkingAccount.transfer(1200, savingsAccount);
+  }
+
+  @Test(expected=IllegalArgumentException.class)
+  public void testTransferWithNegativeAmountOfMoney(){
+    checkingAccount.deposit(1000);
+    savingsAccount.deposit(1000);
+    checkingAccount.transfer(-500, savingsAccount);
+  }
 }
