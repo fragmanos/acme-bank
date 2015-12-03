@@ -1,24 +1,29 @@
-package com.abc;
+package com.mybank.customer;
+
+import com.mybank.account.BasicAccount;
+import com.mybank.transaction.Transaction;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.mybank.types.TransactionType.*;
 import static java.lang.Math.abs;
 
 public class Customer {
+
     private String customerName;
-    private List<Account> accounts;
+    private List<BasicAccount> accounts;
 
     public Customer(String customerName) {
         this.customerName = customerName;
-        this.accounts = new ArrayList<Account>();
+        this.accounts = new ArrayList<BasicAccount>();
     }
 
     public String getCustomerName() {
         return customerName;
     }
 
-    public void openAccount(Account account) {
+    public void openAccount(BasicAccount account) {
         accounts.add(account);
     }
 
@@ -32,41 +37,38 @@ public class Customer {
         statement.append("Statement for ")
           .append(customerName)
           .append("\n");
-        for (Account account : accounts) {
+        for (BasicAccount account : accounts) {
             statement.append("\n").append(getStatementForAccount(account)).append("\n");
-            transactionAmount += account.sumTransactions();
+            transactionAmount += account.getBalance();
         }
         statement.append("\nTotal In All Accounts ")
           .append(getTransactionAmountFormattedToDollars(transactionAmount));
         return String.valueOf(statement);
     }
 
-    private String getStatementForAccount(Account account) {
+    private String getStatementForAccount(BasicAccount account) {
         StringBuilder accountStatement = new StringBuilder("");
-        double total = 0.0;
+        double balance = 0.0;
 
         accountStatement.append(account.getAccountType().getDescription()).append("\n");
 
-        for(Transaction transaction : account.transactions) {
+        for(Transaction transaction : account.getTransactions()) {
             accountStatement
               .append("  ").append(getTransactionType(transaction))
               .append(" ").append(getTransactionAmountFormattedToDollars(transaction.getAmount()))
               .append("\n");
-            total += transaction.getAmount();
+            balance += transaction.getAmount();
         }
-        accountStatement.append("Total ").append(getTransactionAmountFormattedToDollars(total));
+        accountStatement.append("Total ").append(getTransactionAmountFormattedToDollars(balance));
         return String.valueOf(accountStatement);
     }
 
     private String getTransactionType(Transaction transaction) {
-        return transaction.getAmount() < 0 ? "withdrawal" : "deposit";
+        return transaction.getAmount() < 0 ? WITHDRAWAL.getDescription() : DEPOSIT.getDescription();
     }
 
     private String getTransactionAmountFormattedToDollars(double amount){
         return String.format("$%,.2f", abs(amount));
     }
 
-    public double getTotalInterestEarnedForAccount(Account account) {
-        return account.getInterestEarned();
-    }
 }

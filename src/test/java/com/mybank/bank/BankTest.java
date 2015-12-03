@@ -1,5 +1,9 @@
-package com.abc;
+package com.mybank.bank;
 
+import com.mybank.account.CheckingAccount;
+import com.mybank.account.MaxiSavingsAccount;
+import com.mybank.account.SavingsAccount;
+import com.mybank.customer.Customer;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -11,18 +15,18 @@ public class BankTest {
 
     private Bank bank;
     private Customer customer;
-    private Account checkingAccount;
-    private Account savingsAccount;
-    private Account maxiSavingsAccount;
+    private CheckingAccount checkingAccount;
+    private SavingsAccount savingsAccount;
+    private MaxiSavingsAccount maxiSavingsAccount;
 
     @Before
     public void setUp() throws Exception {
         bank = new Bank();
         customer = new Customer("Manos");
         bank.addCustomer(customer);
-        checkingAccount = new Account(AccountType.CHECKING);
-        savingsAccount = new Account(AccountType.SAVINGS);
-        maxiSavingsAccount = new Account(AccountType.MAXI_SAVINGS);
+        checkingAccount = new CheckingAccount();
+        savingsAccount = new SavingsAccount();
+        maxiSavingsAccount = new MaxiSavingsAccount();
     }
 
     @Test
@@ -33,23 +37,20 @@ public class BankTest {
 
     @Test
     public void testTotalInterestPaidForCheckingAccountMatchesExpected() {
-        customer.openAccount(checkingAccount);
         checkingAccount.deposit(100.0);
-        assertEquals(0.1, customer.getTotalInterestEarnedForAccount(checkingAccount), DOUBLE_DELTA);
+        assertEquals(0.1, checkingAccount.getInterestEarned(), DOUBLE_DELTA);
     }
 
     @Test
     public void testTotalInterestPaidForSavingsAccountMatchesExpected() {
-        customer.openAccount(savingsAccount);
         savingsAccount.deposit(1500.0);
-        assertEquals(2.0, customer.getTotalInterestEarnedForAccount(savingsAccount), DOUBLE_DELTA);
+        assertEquals(2.0, savingsAccount.getInterestEarned(), DOUBLE_DELTA);
     }
 
     @Test
     public void testTotalInterestPaidForMaxiSavingsAccountMatchesExpected() {
-        customer.openAccount(maxiSavingsAccount);
         maxiSavingsAccount.deposit(3000.0);
-        assertEquals(170.0, customer.getTotalInterestEarnedForAccount(maxiSavingsAccount), DOUBLE_DELTA);
+        assertEquals(170.0, maxiSavingsAccount.getInterestEarned(), DOUBLE_DELTA);
     }
 
 }

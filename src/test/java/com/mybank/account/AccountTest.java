@@ -1,4 +1,4 @@
-package com.abc;
+package com.mybank.account;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -12,15 +12,15 @@ public class AccountTest {
 
   private static final double DOUBLE_DELTA = 1e-15;
 
-  private Account checkingAccount;
-  private Account savingsAccount;
-  private Account maxiSavingsAccount;
+  private CheckingAccount checkingAccount;
+  private SavingsAccount savingsAccount;
+  private MaxiSavingsAccount maxiSavingsAccount;
 
   @Before
   public void setUp() throws Exception {
-    checkingAccount = new Account(AccountType.CHECKING);
-    savingsAccount = new Account(AccountType.SAVINGS);
-    maxiSavingsAccount = new Account(AccountType.MAXI_SAVINGS);
+    checkingAccount = new CheckingAccount();
+    savingsAccount = new SavingsAccount();
+    maxiSavingsAccount = new MaxiSavingsAccount();
   }
 
   @Test(expected=IllegalArgumentException.class)
@@ -61,8 +61,8 @@ public class AccountTest {
     checkingAccount.deposit(1000);
     savingsAccount.deposit(1000);
     checkingAccount.transfer(200, savingsAccount);
-    assertEquals(800, checkingAccount.sumTransactions(), DOUBLE_DELTA);
-    assertEquals(1200, savingsAccount.sumTransactions(), DOUBLE_DELTA);
+    assertEquals(800, checkingAccount.getBalance(), DOUBLE_DELTA);
+    assertEquals(1200, savingsAccount.getBalance(), DOUBLE_DELTA);
   }
 
   @Test(expected=IllegalArgumentException.class)

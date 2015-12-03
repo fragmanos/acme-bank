@@ -1,16 +1,14 @@
-package com.abc;
+package com.mybank.transaction;
 
-import java.util.Calendar;
-import java.util.Date;
+import org.joda.time.DateTime;
 
 public class Transaction {
     private double amount;
-
-    private Date transactionDate;
+    private DateTime transactionDate;
 
     public Transaction(double amount) {
         this.amount = amount;
-        this.transactionDate = Calendar.getInstance().getTime();
+        this.transactionDate = DateTime.now();
     }
 
     public double getAmount() {

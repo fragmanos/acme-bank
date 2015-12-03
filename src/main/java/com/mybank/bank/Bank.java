@@ -1,7 +1,9 @@
-package com.abc;
+package com.mybank.bank;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import com.mybank.customer.Customer;
 
 public class Bank {
     private List<Customer> customers;

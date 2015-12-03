@@ -1,15 +1,28 @@
-package com.abc;
+package com.mybank.customer;
 
+import com.mybank.account.CheckingAccount;
+import com.mybank.account.MaxiSavingsAccount;
+import com.mybank.account.SavingsAccount;
+import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
 public class CustomerTest {
 
+    CheckingAccount checkingAccount;
+    SavingsAccount savingsAccount;
+    MaxiSavingsAccount maxiSavingsAccount;
+
+    @Before
+    public void setUp() throws Exception {
+        checkingAccount = new CheckingAccount();
+        savingsAccount = new SavingsAccount();
+        maxiSavingsAccount = new MaxiSavingsAccount();
+    }
+
     @Test
     public void TestCustomerStatementGeneration(){
-      Account checkingAccount = new Account(AccountType.CHECKING);
-      Account savingsAccount = new Account(AccountType.SAVINGS);
 
       Customer henry = new Customer("Henry");
       henry.openAccount(checkingAccount);
@@ -37,9 +50,9 @@ public class CustomerTest {
     @Test
     public void testThreeAccountsForACustomer() {
         Customer oscar = new Customer("Oscar");
-        oscar.openAccount(new Account(AccountType.SAVINGS));
-        oscar.openAccount(new Account(AccountType.CHECKING));
-        oscar.openAccount(new Account(AccountType.MAXI_SAVINGS));
+        oscar.openAccount(checkingAccount);
+        oscar.openAccount(savingsAccount);
+        oscar.openAccount(maxiSavingsAccount);
         assertEquals(3, oscar.getNumberOfAccounts());
     }
 }

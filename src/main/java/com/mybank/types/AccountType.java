@@ -1,4 +1,4 @@
-package com.abc;
+package com.mybank.types;
 
 /**
  * @author fragkakise on 30/11/2015.
