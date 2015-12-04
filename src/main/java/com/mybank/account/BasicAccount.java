@@ -1,10 +1,10 @@
 package com.mybank.account;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.mybank.transaction.Transaction;
 import com.mybank.types.AccountType;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static com.mybank.messages.ExceptionErrorMessages.*;
 
@@ -63,7 +63,5 @@ public abstract class BasicAccount {
     }
     return balance;
   }
-
-  public abstract double getInterestEarned();
 
 }

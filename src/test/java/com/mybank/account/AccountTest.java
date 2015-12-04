@@ -1,5 +1,6 @@
 package com.mybank.account;
 
+import org.joda.time.DateTime;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -39,18 +40,6 @@ public class AccountTest {
   }
 
   @Test
-  public void testMaxiSavingsAccountInterestEarnedWithAmountLessThanThousand(){
-    maxiSavingsAccount.deposit(1000);
-    assertEquals(20.0, maxiSavingsAccount.getInterestEarned(), DOUBLE_DELTA);
-  }
-
-  @Test
-  public void testMaxiSavingsAccountInterestEarnedWithAmountLessThanTwoThousand(){
-    maxiSavingsAccount.deposit(2000);
-    assertEquals(70.0, maxiSavingsAccount.getInterestEarned(), DOUBLE_DELTA);
-  }
-
-  @Test
   public void testSavingsAccountInterestEarnedWithAmountLessThanThousand(){
     savingsAccount.deposit(1000);
     assertEquals(1, savingsAccount.getInterestEarned(), DOUBLE_DELTA);
@@ -78,4 +67,19 @@ public class AccountTest {
     savingsAccount.deposit(1000);
     checkingAccount.transfer(-500, savingsAccount);
   }
+
+  @Test
+  public void testMaxiSavingsAccountWithoutWithdrawalForTenDays(){
+    maxiSavingsAccount.deposit(10000);
+    maxiSavingsAccount.withdraw(9000);
+    assertEquals(50, maxiSavingsAccount.getInterestEarned(DateTime.now().plusDays(11)), DOUBLE_DELTA);
+  }
+
+  @Test
+  public void testMaxiSavingsAccountWithWithdrawalOnTheNextTenDays(){
+    maxiSavingsAccount.deposit(10000);
+    maxiSavingsAccount.withdraw(9000);
+    assertEquals(1, maxiSavingsAccount.getInterestEarned(DateTime.now().plusDays(3)), DOUBLE_DELTA);
+  }
+
 }

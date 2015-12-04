@@ -18,7 +18,6 @@ public class SavingsAccount extends BasicAccount {
     return accountType;
   }
 
-  @Override
   public double getInterestEarned() {
     double balance = getBalance();
     if (balance <= 1000)

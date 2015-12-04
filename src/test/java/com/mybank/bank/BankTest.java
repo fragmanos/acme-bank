@@ -47,10 +47,4 @@ public class BankTest {
         assertEquals(2.0, savingsAccount.getInterestEarned(), DOUBLE_DELTA);
     }
 
-    @Test
-    public void testTotalInterestPaidForMaxiSavingsAccountMatchesExpected() {
-        maxiSavingsAccount.deposit(3000.0);
-        assertEquals(170.0, maxiSavingsAccount.getInterestEarned(), DOUBLE_DELTA);
-    }
-
 }

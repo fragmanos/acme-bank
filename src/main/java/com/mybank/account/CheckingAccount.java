@@ -18,7 +18,6 @@ public class CheckingAccount extends BasicAccount {
     return accountType;
   }
 
-  @Override
   public double getInterestEarned() {
     return getBalance() * 0.001;
   }
