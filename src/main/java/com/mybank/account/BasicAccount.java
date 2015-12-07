@@ -1,10 +1,10 @@
 package com.mybank.account;
 
-import com.mybank.transaction.Transaction;
-import com.mybank.types.AccountType;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import com.mybank.transaction.Transaction;
+import com.mybank.types.AccountType;
 
 import static com.mybank.messages.ExceptionErrorMessages.*;
 

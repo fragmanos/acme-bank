@@ -1,10 +1,10 @@
 package com.mybank.customer;
 
-import com.mybank.account.BasicAccount;
-import com.mybank.transaction.Transaction;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import com.mybank.account.BasicAccount;
+import com.mybank.transaction.Transaction;
 
 import static com.mybank.types.TransactionType.*;
 import static java.lang.Math.abs;
@@ -48,7 +48,7 @@ public class Customer {
 
     private String getStatementForAccount(BasicAccount account) {
         StringBuilder accountStatement = new StringBuilder("");
-        double balance = 0.0;
+        double balance = 0;
 
         accountStatement.append(account.getAccountType().getDescription()).append("\n");
 

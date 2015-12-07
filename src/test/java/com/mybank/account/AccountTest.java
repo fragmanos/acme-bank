@@ -11,7 +11,7 @@ import static org.junit.Assert.assertEquals;
  */
 public class AccountTest {
 
-  private static final double DOUBLE_DELTA = 1e-15;
+  private static final double DOUBLE_DELTA = 2;
 
   private CheckingAccount checkingAccount;
   private SavingsAccount savingsAccount;
@@ -40,12 +40,6 @@ public class AccountTest {
   }
 
   @Test
-  public void testSavingsAccountInterestEarnedWithAmountLessThanThousand(){
-    savingsAccount.deposit(1000);
-    assertEquals(1, savingsAccount.getInterestEarned(), DOUBLE_DELTA);
-  }
-
-  @Test
   public void testTransferBetweenAccountsMatchesExpected(){
     checkingAccount.deposit(1000);
     savingsAccount.deposit(1000);
@@ -69,10 +63,85 @@ public class AccountTest {
   }
 
   @Test
-  public void testMaxiSavingsAccountWithoutWithdrawalForTenDays(){
-    maxiSavingsAccount.deposit(10000);
-    maxiSavingsAccount.withdraw(9000);
-    assertEquals(50, maxiSavingsAccount.getInterestEarned(DateTime.now().plusDays(11)), DOUBLE_DELTA);
+  public void testOneYearTotalInterestPaidForCheckingAccountMatchesExpected() {
+    // value 'balanceExpected' is exported from excel named Interest Calculations.xlsx - Checking TAB - 367 row
+    double principalAmount = 100000.0;
+    double balanceExpected = 100100.04987955;
+    double expectedInterest  = balanceExpected - principalAmount;
+    checkingAccount.deposit(principalAmount);
+    assertEquals(expectedInterest, checkingAccount.getInterestEarned(DateTime.now().plusYears(1)), DOUBLE_DELTA);
+  }
+
+  @Test
+  public void testTwoYearsTotalInterestPaidForCheckingAccountMatchesExpected() {
+    // value 'balanceExpected' is exported from excel named Interest Calculations.xlsx - Checking TAB - 367 row
+    double principalAmount = 100000.0;
+    double balanceExpected = 100200.19985888;
+    double expectedInterest  = balanceExpected - principalAmount;
+    checkingAccount.deposit(principalAmount);
+    assertEquals(expectedInterest, checkingAccount.getInterestEarned(DateTime.now().plusYears(2).plusMinutes(1)), DOUBLE_DELTA);
+  }
+
+  @Test
+  public void testOneYearTotalInterestPaidForSavingsAccountWithBalanceOverThousandMatchesExpected() {
+    // value 'balanceExpected' is exported from excel named Interest Calculations.xlsx - Checking TAB - 367 row
+    double principalAmount = 100000.0;
+    double balanceExpected = 100199.19858644;
+    double expectedInterest  = balanceExpected - principalAmount;
+    savingsAccount.deposit(principalAmount);
+    assertEquals(expectedInterest, savingsAccount.getInterestEarned(DateTime.now().plusYears(1)), DOUBLE_DELTA);
+  }
+
+  @Test
+  public void testTwoYearTotalInterestPaidForSavingsAccountWithBalanceOverThousandMatchesExpected() {
+    // value 'balanceExpected' is exported from excel named Interest Calculations.xlsx - Checking TAB - 367 row
+    double principalAmount = 100000.0;
+    double balanceExpected = 100398.79596762;
+    double expectedInterest  = balanceExpected - principalAmount;
+    savingsAccount.deposit(principalAmount);
+    assertEquals(expectedInterest, savingsAccount.getInterestEarned(DateTime.now().plusYears(2).plusMinutes(1)), DOUBLE_DELTA);
+  }
+
+  @Test
+  public void testOneYearTotalInterestPaidForSavingsAccountWithBalanceEqualToThousandMatchesExpected() {
+    // value 'balanceExpected' is exported from excel named Interest Calculations.xlsx - Checking TAB - 367 row
+    double principalAmount = 1000.0;
+    double balanceExpected = 1001.00324126;
+    double expectedInterest  = balanceExpected - principalAmount;
+    savingsAccount.deposit(principalAmount);
+    assertEquals(expectedInterest, savingsAccount.getInterestEarned(DateTime.now().plusYears(1).plusMinutes(1)), DOUBLE_DELTA);
+  }
+
+  @Test
+  public void testTwoYearTotalInterestPaidForSavingsAccountWithBalanceEqualToThousandMatchesExpected() {
+    // value 'balanceExpected' is exported from excel named Interest Calculations.xlsx - Checking TAB - 367 row
+    double principalAmount = 1000.0;
+    double balanceExpected = 1002.00474380;
+    double expectedInterest  = balanceExpected - principalAmount;
+    savingsAccount.deposit(principalAmount);
+    assertEquals(expectedInterest, savingsAccount.getInterestEarned(DateTime.now().plusYears(2).plusMinutes(1)), DOUBLE_DELTA);
+  }
+
+  @Test
+  public void testOneYearMaxiSavingsAccountInterestEarnedWithoutWithdrawalForTenDays() {
+    // value 'balanceExpected' is exported from excel named Interest Calculations.xlsx - Checking TAB - 367 row
+    maxiSavingsAccount.deposit(1000000);
+    maxiSavingsAccount.withdraw(900000);
+    double principalAmount = maxiSavingsAccount.getBalance();
+    double balanceExpected = 105126.74964675;
+    double expectedInterest  = balanceExpected - principalAmount;
+    assertEquals(expectedInterest, maxiSavingsAccount.getInterestEarned(DateTime.now().plusYears(1)), DOUBLE_DELTA);
+  }
+
+  @Test
+  public void testTwoYearMaxiSavingsAccountInterestEarnedWithoutWithdrawalForTenDays() {
+    // value 'balanceExpected' is exported from excel named Interest Calculations.xlsx - Checking TAB - 367 row
+    maxiSavingsAccount.deposit(1000000);
+    maxiSavingsAccount.withdraw(900000);
+    double principalAmount = maxiSavingsAccount.getBalance();
+    double balanceExpected = 110516.33491290;
+    double expectedInterest  = balanceExpected - principalAmount;
+    assertEquals(expectedInterest, maxiSavingsAccount.getInterestEarned(DateTime.now().plusYears(2).plusMinutes(1)), DOUBLE_DELTA);
   }
 
   @Test
