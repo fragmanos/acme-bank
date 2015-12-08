@@ -39,35 +39,6 @@ public class MaxiSavingsAccount extends BasicAccount {
     }
   }
 
-  /**
-   * Future Value Of Invested Principal
-   * Principal * pow((1 + (Rate / interestPaymentFrequency)), (interestPaymentFrequency))
-   *
-   * @param rate The annual interest rate (as a decimal)
-   * @param frequency How often in a year interest is paid.
-   * @return Future value of invested principal
-   */
-  public double getFutureValue(double principal, double rate, double frequency) {
-    double division = rate / frequency;
-    double addition = 1+ division;
-    return principal * Math.pow(addition, frequency);
-  }
-
-  /**
-   * Future Value Of Invested Principal
-   * Principal * pow((1 + (Rate / interestPaymentFrequency)), (interestPaymentFrequency * years))
-   *
-   * @param rate The annual interest rate (as a decimal)
-   * @param frequency How often in a year interest is paid.
-   * @param numberOfYears Number of years for compounding calculation of more than a Year
-   * @return Future value of invested principal
-   */
-  public double getFutureValue(double principal, double rate, int frequency, int numberOfYears) {
-    double division = rate / frequency;
-    double addition = 1+ division;
-    return principal * Math.pow(addition, frequency * numberOfYears);
-  }
-
   public boolean isWithdrawOccurredOnLastTenDays(DateTime futureDateTime) {
   boolean withdrawOccurredOnLastTenDays = false;
         for (Transaction transaction : getTransactions()) {
